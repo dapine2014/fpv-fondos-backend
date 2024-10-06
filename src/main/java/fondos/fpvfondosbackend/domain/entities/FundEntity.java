@@ -1,7 +1,5 @@
 package fondos.fpvfondosbackend.domain.entities;
 
-
-import fondos.fpvfondosbackend.domain.auxiliary.SubscribedFund;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,22 +10,19 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
-import java.util.List;
 
 @ToString
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@Setter
+@AllArgsConstructor
 @Getter
-@Document(collection = "usuarios")
-public class UserEntity implements Serializable {
+@Setter
+@Document(collection = "fondos")
+public class FundEntity implements Serializable {
 
     @Id
     private String id;
     private String nombre;
-    private String email;
-    private String telefono;
-    private double saldo;
-    private List<SubscribedFund> fondosSuscritos;
+    private double montoMinimo;
+    private String categoria;
 }
