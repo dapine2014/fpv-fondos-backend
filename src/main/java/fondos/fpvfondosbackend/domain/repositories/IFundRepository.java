@@ -1,10 +1,11 @@
 package fondos.fpvfondosbackend.domain.repositories;
 
 import fondos.fpvfondosbackend.domain.entities.FundEntity;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface IFundRepository extends MongoRepository<FundEntity, String> {
-    boolean existsById(String name);
+import java.util.List;
+
+public interface IFundRepository {
+    FundEntity saveAll(FundEntity fundEntity);
+    FundEntity findDynamoById(String id);
+    List<FundEntity> findAll();
 }

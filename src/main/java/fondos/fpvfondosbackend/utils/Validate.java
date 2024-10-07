@@ -2,11 +2,11 @@ package fondos.fpvfondosbackend.utils;
 
 import fondos.fpvfondosbackend.aplication.dto.FundDto;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 import java.util.Objects;
-import static fondos.fpvfondosbackend.utils.constant.FUND_AMOUNT_NULL;
-import static fondos.fpvfondosbackend.utils.constant.FUND_CATEGORY_NULL;
-import static fondos.fpvfondosbackend.utils.constant.FUND_NAME_NULL;
-import static fondos.fpvfondosbackend.utils.constant.FUND_NULL;
+
+import static fondos.fpvfondosbackend.utils.constant.*;
 
 @Component
 public class Validate {
@@ -24,6 +24,18 @@ public class Validate {
 
         if (!isCategoryValid(fundDto.getCategoria())) {
             throw new IllegalArgumentException(FUND_CATEGORY_NULL);
+        }
+    }
+
+    public void validateFund(List<FundDto> fundDtoList) {
+        if (fundDtoList == null || fundDtoList.isEmpty()) {
+            throw new IllegalArgumentException(FUND_LIST_NULL);
+        }
+    }
+
+    public void validateCategory(String data) {
+        if (data == null || data.isEmpty()) {
+            throw new IllegalArgumentException(FUND_SEARCH_NULL);
         }
     }
 

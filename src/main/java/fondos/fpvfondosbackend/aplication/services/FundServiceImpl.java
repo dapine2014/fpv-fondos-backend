@@ -31,23 +31,24 @@ public class FundServiceImpl implements IFundService {
                                            .montoMinimo(fund.getMontoMinimo())
                                            .categoria(fund.getCategoria()).build();
 
-        return  Mapper.map(fundRepository.save(fundEntity), FundDto.class);
+        return  Mapper.map(fundRepository.saveAll(fundEntity), FundDto.class);
     }
 
 
     @Override
     public FundDto updateFund(FundDto fund) {
+          if(fundRepository.findDynamoById(fund.getId()) != null) {
 
-        return fundRepository.findById(fund.getId())
-                .map(fundEntity -> {
-                    fundEntity.setNombre(fund.getNombre());
-                    fundEntity.setMontoMinimo(fund.getMontoMinimo());
-                    fundEntity.setCategoria(fund.getCategoria());
-                    return fundEntity;
-                })
-                .map(fundRepository::save)
-                .map(fundEntity -> Mapper.map(fundEntity, FundDto.class))
-                .orElse(null);
+              FundEntity fundEntity  = FundEntity.builder()
+                      .id(fund.getId())
+                      .nombre(fund.getNombre())
+                      .montoMinimo(fund.getMontoMinimo())
+                      .categoria(fund.getCategoria()).build();
+
+              return  Mapper.map(fundRepository.saveAll(fundEntity), FundDto.class);
+          }
+
+        return null;
     }
 
 }
