@@ -1,6 +1,7 @@
 package fondos.fpvfondosbackend.domain.entities;
 
 import fondos.fpvfondosbackend.domain.auxiliary.SubscribedFund;
+import fondos.fpvfondosbackend.domain.auxiliary.TransactionHistory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,4 +25,5 @@ public class UserEntity implements Serializable {
     private String telefono;
     private double saldo;
     private List<SubscribedFund> fondosSuscritos;
+    private List<TransactionHistory> transactionHistory;
 }

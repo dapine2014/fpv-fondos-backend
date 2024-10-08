@@ -2,7 +2,7 @@ package fondos.fpvfondosbackend.aplication.services;
 
 import fondos.fpvfondosbackend.aplication.dto.FundDto;
 import fondos.fpvfondosbackend.domain.repositories.IFundRepository;
-import fondos.fpvfondosbackend.domain.services.IFundListService;
+import fondos.fpvfondosbackend.domain.services.IFundEventService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class FundListServiceImpl implements IFundListService {
+public class FundEventServiceImpl implements IFundEventService {
 
     private final IFundRepository fundRepository;
     private final ModelMapper Mapper;
 
     @Autowired
-    public FundListServiceImpl(IFundRepository fundRepository) {
+    public FundEventServiceImpl(IFundRepository fundRepository) {
         this.fundRepository = fundRepository;
         this.Mapper = new ModelMapper();
     }

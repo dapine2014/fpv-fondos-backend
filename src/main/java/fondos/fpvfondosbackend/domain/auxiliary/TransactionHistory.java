@@ -8,16 +8,21 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 
 @ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Setter
-public class SubscribedFund implements Serializable {
-    private String fondoId;
-    private String nombreFondo;
-    private double monto;
-    private String fechaSuscripcion;
+@Getter
+public class TransactionHistory implements Serializable {
+
+    private String id;
+    private String fundId;
+    private String fundName;
+    private String type; // subscription or cancellation
+    private double amount;
+    private String date;
 }

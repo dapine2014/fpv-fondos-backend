@@ -2,7 +2,7 @@ package fondos.fpvfondosbackend.infrastructure.adapters.inbound.rest.controller;
 
 import fondos.fpvfondosbackend.aplication.dto.FundDto;
 import fondos.fpvfondosbackend.aplication.ports.inbound.IReplaceService;
-import fondos.fpvfondosbackend.aplication.ports.inbound.ISubscriptionService;
+import fondos.fpvfondosbackend.aplication.ports.inbound.ICreateFundService;
 import fondos.fpvfondosbackend.aplication.ports.outbound.IReadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/funds")
-public class SuscripcionController {
+public class FundController {
 
-    private final ISubscriptionService subscriptionService;
+    private final ICreateFundService subscriptionService;
     private final IReplaceService replaceService;
     private final IReadService readService;
 
     @Autowired
-    public SuscripcionController(ISubscriptionService subscriptionService, IReplaceService replaceService, IReadService readService) {
+    public FundController(ICreateFundService subscriptionService, IReplaceService replaceService, IReadService readService) {
         this.subscriptionService = subscriptionService;
         this.replaceService = replaceService;
         this.readService = readService;
@@ -28,7 +28,7 @@ public class SuscripcionController {
     public ResponseEntity<Object> subscribeFund(@RequestBody FundDto fund) {
         try {
             // Ejecutar el caso de uso de suscripción
-            FundDto result = subscriptionService.createSubscription(fund);
+            FundDto result = subscriptionService.createFund(fund);
             // Respuesta exitosa con el fondo creado
             return ResponseEntity.status(HttpStatus.CREATED).body(result);
         } catch (IllegalArgumentException e) {
