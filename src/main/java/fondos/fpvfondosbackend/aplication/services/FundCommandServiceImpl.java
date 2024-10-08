@@ -2,6 +2,7 @@ package fondos.fpvfondosbackend.aplication.services;
 
 import fondos.fpvfondosbackend.aplication.dto.FundDto;
 import fondos.fpvfondosbackend.aplication.dto.UserDto;
+import fondos.fpvfondosbackend.aplication.ports.inbound.INotificationService;
 import fondos.fpvfondosbackend.domain.auxiliary.SubscribedFund;
 import fondos.fpvfondosbackend.domain.auxiliary.TransactionHistory;
 import fondos.fpvfondosbackend.domain.entities.FundEntity;
@@ -23,12 +24,14 @@ import java.util.UUID;
 @Service
 public class FundCommandServiceImpl implements IFundCommandService {
 
+    private final INotificationService notificationService;
     private final IUserRepository userRepository;
     private final IFundRepository fundRepository;
     private final ModelMapper mapper;
 
     @Autowired
-    public FundCommandServiceImpl(IUserRepository userRepository, IFundRepository fundRepository ) {
+    public FundCommandServiceImpl(INotificationService notificationService, IUserRepository userRepository, IFundRepository fundRepository ) {
+        this.notificationService = notificationService;
         this.userRepository = userRepository;
         this.fundRepository = fundRepository;
         this.mapper = new ModelMapper();
@@ -98,6 +101,8 @@ public class FundCommandServiceImpl implements IFundCommandService {
         user.getFondosSuscritos().add(subscribedFund);
         //actualizamos el historial
         user.getTransactionHistory().add(transaction);
+
+        notificationService.sendEmail(user.getTelefono(),"prueba", "el usuario adquirio la cuenta " + fund.getNombre());
         
         return mapper.map(userRepository.saveAll(user),UserDto.class);
     }
@@ -130,6 +135,7 @@ public class FundCommandServiceImpl implements IFundCommandService {
         user.getTransactionHistory().add(transaction);
 
         userRepository.saveAll(user);
+        notificationService.sendEmail(user.getTelefono(),"prueba", "el usuario  cancelo  la cuenta " +  subscribedFund.getNombreFondo());
     }
 
 }

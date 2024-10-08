@@ -32,4 +32,6 @@ public class DynamoDBConfig {
                 .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
                 .build();
     }
+
+
 }
