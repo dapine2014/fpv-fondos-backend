@@ -129,8 +129,8 @@ public class UserRespositoryImpl implements IUserRepository {
         for (AttributeValue attributeValue : attributeValues) {
             Map<String, AttributeValue> subscriptionMap = attributeValue.m();
             SubscribedFund subscription = new SubscribedFund();
-            subscription.setFondoId(subscriptionMap.get("fundId").s());
-            subscription.setNombreFondo(subscriptionMap.get("subscriptionDate").s());
+            subscription.setFondoId(subscriptionMap.get("fondoId").s());
+            subscription.setNombreFondo(subscriptionMap.get("nombreFondo").s());
             subscription.setMonto(Double.parseDouble(subscriptionMap.get("monto").s()));
             subscription.setFechaSuscripcion(subscriptionMap.get("fechaSuscripcion").s());
             subscriptions.add(subscription);
@@ -149,7 +149,7 @@ public class UserRespositoryImpl implements IUserRepository {
             transaction.setFundId(transactionMap.get("fondoId").s());
             transaction.setFundName(transactionMap.get("nombreFondo").s());
             transaction.setType(transactionMap.get("evento").s());
-            transaction.setAmount(Double.parseDouble(transactionMap.get("monto").n()));
+            transaction.setAmount(Double.parseDouble(transactionMap.get("saldo").s()));
             transaction.setDate(transactionMap.get("fecha").s());
             transactions.add(transaction);
         }
