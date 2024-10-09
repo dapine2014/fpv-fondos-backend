@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 public class NotificationServiceImpl implements INotificationService {
 
     public static final String ACCOUNT_SID = "AC6d772908fbed2a293f12bee25847effb";
-    public static final String AUTH_TOKEN = "87b2d1534c5e14ace988e35b7ce97dd3";
+    public static final String AUTH_TOKEN = "e555bd329d98633439b6efe561bbe925";
+
 
     private final static String EMAIL = "aws.test2025@gmail.com";
 

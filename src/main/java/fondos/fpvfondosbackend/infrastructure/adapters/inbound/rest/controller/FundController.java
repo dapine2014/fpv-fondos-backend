@@ -25,11 +25,12 @@ public class FundController {
     }
 
     @PostMapping("/create")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Object> subscribeFund(@RequestBody FundDto fund) {
         try {
             // Ejecutar el caso de uso de suscripción
             FundDto result = subscriptionService.createFund(fund);
-            // Respuesta exitosa con el fondo creado
+            // Respuesta exitosa con el fondo creadov
             return ResponseEntity.status(HttpStatus.CREATED).body(result);
         } catch (IllegalArgumentException e) {
             // Manejo de excepciones de negocio (p. ej., validaciones fallidas)
@@ -42,6 +43,7 @@ public class FundController {
     }
 
     @PutMapping("/update")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Object> updateFund(@RequestBody FundDto fund) {
         try {
             FundDto result = replaceService.replaceFund(fund);
@@ -57,6 +59,7 @@ public class FundController {
     }
 
     @GetMapping("/read")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Object> readAllFund() {
        try {
           return  ResponseEntity.status(HttpStatus.OK).body(readService.readFundAll());

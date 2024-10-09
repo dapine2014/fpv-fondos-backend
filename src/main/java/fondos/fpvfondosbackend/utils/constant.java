@@ -13,7 +13,8 @@ public static String USER_NAME_NULL = "El nombre del usuario no puede ser nulo "
 public static String USER_EMAIL_NULL = "El email no puede ser nulo ";
 public static String USER_TEL = "El telefono no puede ser nulo ";
 public static String USER_SALDO_NOT_NUMERIC = "El saldo debe ser numerico ";
-
 public static String DATA_NULL = "El dato no puede ser nulo";
 
+public static String GENERIC_VALUE_NULL = "El valor no puede ser nulo";
+public static String GENERIC_VALUE_EMTPY = "El valor no puede estar en blanco";
 }

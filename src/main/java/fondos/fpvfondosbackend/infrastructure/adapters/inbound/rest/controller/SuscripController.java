@@ -1,15 +1,15 @@
 package fondos.fpvfondosbackend.infrastructure.adapters.inbound.rest.controller;
 
+
+import fondos.fpvfondosbackend.aplication.dto.RegisterDto;
 import fondos.fpvfondosbackend.aplication.dto.UserDto;
 import fondos.fpvfondosbackend.aplication.ports.inbound.IUserSucribeToFundService;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -23,10 +23,11 @@ public class SuscripController {
         this.sucribeToFundService = sucribeToFundService;
     }
 
-    @GetMapping("/suscrip/{userId}/{fundId}")
-    public ResponseEntity<Object> sucribeToFund(@PathVariable String userId, @PathVariable String fundId) {
+    @PostMapping("/subscribe")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<Object> sucribeToFund(@RequestBody RegisterDto registerDto) {
         try {
-            UserDto userDto = sucribeToFundService.sucribeToFund(userId, fundId);
+            UserDto userDto = sucribeToFundService.sucribeToFund(registerDto.getUserId(), registerDto.getFundId());
             return ResponseEntity.status(HttpStatus.OK).body("User subscribed to fund successfully." + userDto.getId() );
         } catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -35,10 +36,11 @@ public class SuscripController {
         }
     }
 
-    @GetMapping("/unsubscribe/{userId}/{fundId}")
-    public ResponseEntity<Object> unsubscribeFromFund(@PathVariable String userId, @PathVariable String fundId) {
+    @PostMapping("/unsubscribe")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<Object> unsubscribeFromFund(@RequestBody RegisterDto registerDto) {
         try {
-            sucribeToFundService.unsubscribeFromFund(userId, fundId);
+            sucribeToFundService.unsubscribeFromFund(registerDto.getUserId(), registerDto.getFundId());
             return ResponseEntity.status(HttpStatus.OK).body("User unsubscribed from fund successfully.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

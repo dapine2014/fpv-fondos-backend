@@ -1,7 +1,9 @@
 package fondos.fpvfondosbackend.aplication.dto;
 
+
 import lombok.Getter;
 import lombok.Setter;
+
 
 @Getter
 @Setter

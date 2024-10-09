@@ -4,6 +4,7 @@ import fondos.fpvfondosbackend.aplication.dto.FundDto;
 import fondos.fpvfondosbackend.aplication.dto.UserDto;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -66,6 +67,22 @@ public class Validate {
     public void validateCategory(String data) {
         if (data == null || data.isEmpty()) {
             throw new IllegalArgumentException(FUND_SEARCH_NULL);
+        }
+    }
+
+    public <T> void validateData(T item) {
+        if (item == null) {
+            throw  new IllegalArgumentException(GENERIC_VALUE_NULL);
+        }
+        else if (item instanceof Collection) {
+            if (((Collection<?>) item).isEmpty()) {
+                throw new IllegalArgumentException(GENERIC_VALUE_EMTPY);
+            }
+        }
+        else if (item instanceof String) {
+            if (((String) item).isEmpty()) {
+                throw new IllegalArgumentException(GENERIC_VALUE_EMTPY);
+            }
         }
     }
 
