@@ -1,0 +1,26 @@
+version: '3.1'
+
+services:
+  professional1:
+    image: professional
+    container_name: professional1
+    environment:
+      URLDB: jdbc:postgresql://172.20.0.1:5433/listenme
+      USER: postgres
+      PWD: alex8080
+      AUTO: update
+      BOOLFORMAT: "true"
+      TRACE: trace
+      EUREKA_URI: http://172.20.0.1:8761/eureka/
+      URI_KAFKA: http://172.20.0.139:29092
+      REDIS_HOST: 172.20.0.1
+      REDIS_PORT: 6379
+
+    ports:
+      - "0:8080"
+    networks:
+      - data_bases
+
+networks:
+  data_bases:
+    external: true

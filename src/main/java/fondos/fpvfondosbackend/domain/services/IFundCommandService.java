@@ -7,6 +7,6 @@ import fondos.fpvfondosbackend.aplication.dto.UserDto;
 public interface IFundCommandService {
     FundDto execute(FundDto fund);
     FundDto updateFund(FundDto fund);
-    UserDto subscribeToFund(String userId, String fundId);
-    void unsubscribeFromFund(String userId, String fundId);
+    UserDto subscribeToFund(String userId, String fundId, String type);
+    void unsubscribeFromFund(String userId, String fundId , String type);
 }

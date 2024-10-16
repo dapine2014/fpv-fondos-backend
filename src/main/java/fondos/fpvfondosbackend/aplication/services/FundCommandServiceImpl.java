@@ -13,6 +13,8 @@ import fondos.fpvfondosbackend.domain.services.IFundCommandService;
 import fondos.fpvfondosbackend.utils.FundNotSubscribedException;
 import fondos.fpvfondosbackend.utils.InsufficientBalanceException;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +26,14 @@ import java.util.UUID;
 @Service
 public class FundCommandServiceImpl implements IFundCommandService {
 
+    private static final Logger log = LoggerFactory.getLogger(FundCommandServiceImpl.class);
     private final INotificationService notificationService;
     private final IUserRepository userRepository;
     private final IFundRepository fundRepository;
     private final ModelMapper mapper;
+
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     public FundCommandServiceImpl(INotificationService notificationService, IUserRepository userRepository, IFundRepository fundRepository ) {
@@ -67,7 +73,7 @@ public class FundCommandServiceImpl implements IFundCommandService {
     }
 
     @Override
-    public UserDto subscribeToFund(String userId, String fundId) {
+    public UserDto subscribeToFund(String userId, String fundId,String type) {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = formatter.format(date);
@@ -102,13 +108,17 @@ public class FundCommandServiceImpl implements IFundCommandService {
         //actualizamos el historial
         user.getTransactionHistory().add(transaction);
 
-        notificationService.sendEmail(user.getTelefono(),"prueba", "el usuario adquirio la cuenta " + fund.getNombre());
-        
+        if(type.equals("sms")) {
+            notificationService.sendMSM(user.getTelefono(), "PRUEBA", "El usuario adquirio la cuenta " + fund.getNombre());
+        } else {
+            emailService.sendEmail(user.getEmail(), "PRUEBA", "El usuario adquirio la cuenta " + fund.getNombre());
+        }
+
         return mapper.map(userRepository.saveAll(user),UserDto.class);
     }
 
     @Override
-    public void unsubscribeFromFund(String userId, String fundId) {
+    public void unsubscribeFromFund(String userId, String fundId, String type) {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = formatter.format(date);
@@ -135,7 +145,12 @@ public class FundCommandServiceImpl implements IFundCommandService {
         user.getTransactionHistory().add(transaction);
 
         userRepository.saveAll(user);
-        notificationService.sendEmail(user.getTelefono(),"prueba", "el usuario  cancelo  la cuenta " +  subscribedFund.getNombreFondo());
+
+        if(type.equals("sms")) {
+            notificationService.sendMSM(user.getTelefono(), "PRUEBA", "El usuario cancelo la cuenta " + subscribedFund.getNombreFondo());
+        } else {
+            emailService.sendEmail(user.getEmail(), "PRUEBA", "El usuario cancelo la cuenta " + subscribedFund.getNombreFondo());
+        }
     }
 
 }

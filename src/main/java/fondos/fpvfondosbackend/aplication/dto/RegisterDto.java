@@ -10,4 +10,5 @@ import lombok.Setter;
 public class RegisterDto {
     private String  userId;
     private String  fundId;
+    private String  typo;
 }

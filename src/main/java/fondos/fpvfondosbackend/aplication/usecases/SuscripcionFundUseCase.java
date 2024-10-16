@@ -20,18 +20,18 @@ public class SuscripcionFundUseCase implements IUserSucribeToFundService {
     }
 
     @Override
-    public UserDto sucribeToFund(String userId, String fundId) {
+    public UserDto sucribeToFund(String userId, String fundId,String type) {
          validateFund.validateData(userId);
          validateFund.validateData(fundId);
 
-         return fundService.subscribeToFund(userId, fundId);
+         return fundService.subscribeToFund(userId, fundId, type);
     }
 
     @Override
-    public void unsubscribeFromFund(String userId, String fundId) {
+    public void unsubscribeFromFund(String userId, String fundId, String type) {
         validateFund.validateData(userId);
         validateFund.validateData(fundId);
 
-        fundService.unsubscribeFromFund(userId,fundId);
+        fundService.unsubscribeFromFund(userId,fundId,type);
     }
 }

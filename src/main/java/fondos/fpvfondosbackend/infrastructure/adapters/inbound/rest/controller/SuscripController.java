@@ -27,7 +27,7 @@ public class SuscripController {
     @CrossOrigin(origins = "*")
     public ResponseEntity<Object> sucribeToFund(@RequestBody RegisterDto registerDto) {
         try {
-            UserDto userDto = sucribeToFundService.sucribeToFund(registerDto.getUserId(), registerDto.getFundId());
+            UserDto userDto = sucribeToFundService.sucribeToFund(registerDto.getUserId(), registerDto.getFundId(), registerDto.getTypo());
             return ResponseEntity.status(HttpStatus.OK).body("User subscribed to fund successfully." + userDto.getId() );
         } catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -40,7 +40,7 @@ public class SuscripController {
     @CrossOrigin(origins = "*")
     public ResponseEntity<Object> unsubscribeFromFund(@RequestBody RegisterDto registerDto) {
         try {
-            sucribeToFundService.unsubscribeFromFund(registerDto.getUserId(), registerDto.getFundId());
+            sucribeToFundService.unsubscribeFromFund(registerDto.getUserId(), registerDto.getFundId(), registerDto.getTypo()  );
             return ResponseEntity.status(HttpStatus.OK).body("User unsubscribed from fund successfully.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
