@@ -1,8 +1,12 @@
 package fondos.fpvfondosbackend.aplication.dto;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class FundDto {
     private String id;
     private String nombre;

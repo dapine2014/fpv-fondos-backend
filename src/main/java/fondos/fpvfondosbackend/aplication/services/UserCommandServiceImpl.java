@@ -7,6 +7,7 @@ import fondos.fpvfondosbackend.domain.auxiliary.SubscribedFund;
 import fondos.fpvfondosbackend.domain.auxiliary.TransactionHistory;
 import fondos.fpvfondosbackend.domain.entities.UserEntity;
 import fondos.fpvfondosbackend.domain.repositories.IUserRepository;
+import fondos.fpvfondosbackend.domain.repositories.UserTestRepo;
 import fondos.fpvfondosbackend.domain.services.IUserCommandService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,13 @@ import java.util.UUID;
 public class UserCommandServiceImpl implements IUserCommandService {
 
     private final IUserRepository userRepository;
+    private final UserTestRepo userTestRepo;
     private final ModelMapper mapper;
 
     @Autowired
-    public UserCommandServiceImpl(IUserRepository userRepository) {
+    public UserCommandServiceImpl(IUserRepository userRepository, UserTestRepo userTestRepo) {
         this.userRepository = userRepository;
+        this.userTestRepo = userTestRepo;
         this.mapper = new ModelMapper();
     }
 
@@ -39,7 +42,8 @@ public class UserCommandServiceImpl implements IUserCommandService {
                                 .fondosSuscritos( convertSubscribedFunds(userDto.getFondosSuscritos()))
                                 .transactionHistory(convertTransactionHistory(userDto.getTransactionHistory()))
                                 .build();
-        UserEntity savedUserEntity = userRepository.saveAll(userEntity);
+       //UserEntity savedUserEntity = userRepository.saveAll(userEntity);
+       UserEntity savedUserEntity = userTestRepo.save(userEntity);
 
         return mapper.map(savedUserEntity, UserDto.class);
     }

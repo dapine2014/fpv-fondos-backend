@@ -7,6 +7,7 @@ import fondos.fpvfondosbackend.domain.auxiliary.SubscribedFund;
 import fondos.fpvfondosbackend.domain.auxiliary.TransactionHistory;
 import fondos.fpvfondosbackend.domain.entities.FundEntity;
 import fondos.fpvfondosbackend.domain.entities.UserEntity;
+import fondos.fpvfondosbackend.domain.repositories.FundTestRepo;
 import fondos.fpvfondosbackend.domain.repositories.IFundRepository;
 import fondos.fpvfondosbackend.domain.repositories.IUserRepository;
 import fondos.fpvfondosbackend.domain.services.IFundCommandService;
@@ -30,16 +31,19 @@ public class FundCommandServiceImpl implements IFundCommandService {
     private final INotificationService notificationService;
     private final IUserRepository userRepository;
     private final IFundRepository fundRepository;
+    private final FundTestRepo userTestRepo;
     private final ModelMapper mapper;
 
     @Autowired
     private EmailService emailService;
 
     @Autowired
-    public FundCommandServiceImpl(INotificationService notificationService, IUserRepository userRepository, IFundRepository fundRepository ) {
+    public FundCommandServiceImpl(INotificationService notificationService, IUserRepository userRepository, IFundRepository fundRepository,
+                                  FundTestRepo userTestRepo) {
         this.notificationService = notificationService;
         this.userRepository = userRepository;
         this.fundRepository = fundRepository;
+        this.userTestRepo = userTestRepo;
         this.mapper = new ModelMapper();
     }
 
@@ -52,7 +56,8 @@ public class FundCommandServiceImpl implements IFundCommandService {
                                            .montoMinimo(fund.getMontoMinimo())
                                            .categoria(fund.getCategoria()).build();
 
-        return  mapper.map(fundRepository.saveAll(fundEntity), FundDto.class);
+        //return  mapper.map(fundRepository.saveAll(fundEntity), FundDto.class);
+        return  mapper.map(userTestRepo.save(fundEntity), FundDto.class);
     }
 
 
@@ -66,7 +71,8 @@ public class FundCommandServiceImpl implements IFundCommandService {
                       .montoMinimo(fund.getMontoMinimo())
                       .categoria(fund.getCategoria()).build();
 
-              return  mapper.map(fundRepository.saveAll(fundEntity), FundDto.class);
+             // return  mapper.map(fundRepository.saveAll(fundEntity), FundDto.class);
+              return  mapper.map(userTestRepo.save(fundEntity), FundDto.class);
           }
 
         return null;

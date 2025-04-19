@@ -27,8 +27,8 @@ public class UserRespositoryImpl implements IUserRepository {
         item.put("email", AttributeValue.builder().s(userEntity.getEmail()).build());
         item.put("telefono", AttributeValue.builder().s(userEntity.getTelefono()).build());
         item.put("saldo",    AttributeValue.builder().s(String.valueOf(userEntity.getSaldo())).build());
-        item.put("fondos",   AttributeValue.builder().l(convertFundSubscriptions(userEntity.getFondosSuscritos())).build());
-        item.put("historial",AttributeValue.builder().l(convertTransactionHistory(userEntity.getTransactionHistory())).build());
+        item.put("fondosSuscritos",   AttributeValue.builder().l(convertFundSubscriptions(userEntity.getFondosSuscritos())).build());
+        item.put("transactionHistory",AttributeValue.builder().l(convertTransactionHistory(userEntity.getTransactionHistory())).build());
 
         PutItemRequest request = PutItemRequest.builder()
                 .tableName("usuarios")
@@ -50,15 +50,15 @@ public class UserRespositoryImpl implements IUserRepository {
 
         GetItemResponse getItemResponse = dynamoDbClient.getItem(getItemRequest);
         Map<String, AttributeValue> item = getItemResponse.item();
-        if (item != null) {
+        if (!item.isEmpty()) {
             return UserEntity.builder()
                     .id(item.get("id").s())
                     .nombre(item.get("nombre").s())
                     .email(item.get("email").s())
                     .telefono(item.get("telefono").s())
-                    .saldo(Double.parseDouble(item.get("saldo").s()))
-                    .fondosSuscritos(convertToFundSubscriptions(item.get("fondos").l()))
-                    .transactionHistory(convertToTransactionHistory(item.get("historial").l()))
+                    .saldo(Double.parseDouble(item.get("saldo").s()  ))
+                    .fondosSuscritos(convertToFundSubscriptions(item.get("fondosSuscritos").l()))
+                    .transactionHistory(convertToTransactionHistory(item.get("transactionHistory").l()))
                     .build();
         } else {
             return null;
@@ -89,11 +89,11 @@ public class UserRespositoryImpl implements IUserRepository {
                 .map(th -> AttributeValue.builder()
                         .m(Map.of(
                                 "id", AttributeValue.builder().s(th.getFundId()).build(),
-                                "fondoId", AttributeValue.builder().s(th.getFundId()).build(),
-                                "nombreFondo", AttributeValue.builder().s(th.getFundName()).build(),
-                                "evento",AttributeValue.builder().s(th.getType()).build(),
-                                "saldo",AttributeValue.builder().s(String.valueOf(th.getAmount())).build(),
-                                "fecha",AttributeValue.builder().s(th.getDate()).build()
+                                "fundId", AttributeValue.builder().s(th.getFundId()).build(),
+                                "fundName", AttributeValue.builder().s(th.getFundName()).build(),
+                                "type",AttributeValue.builder().s(th.getType()).build(),
+                                "amount",AttributeValue.builder().s(String.valueOf(th.getAmount())).build(),
+                                "date",AttributeValue.builder().s(th.getDate()).build()
                         ))
                         .build())
                 .toList();
@@ -131,7 +131,8 @@ public class UserRespositoryImpl implements IUserRepository {
             SubscribedFund subscription = new SubscribedFund();
             subscription.setFondoId(subscriptionMap.get("fondoId").s());
             subscription.setNombreFondo(subscriptionMap.get("nombreFondo").s());
-            subscription.setMonto(Double.parseDouble(subscriptionMap.get("monto").s()));
+            Object value = subscriptionMap.get("monto").n();
+            subscription.setMonto(Double.parseDouble(subscriptionMap.get("monto").s()  ));
             subscription.setFechaSuscripcion(subscriptionMap.get("fechaSuscripcion").s());
             subscriptions.add(subscription);
         }
@@ -146,11 +147,11 @@ public class UserRespositoryImpl implements IUserRepository {
             Map<String, AttributeValue> transactionMap = attributeValue.m();
             TransactionHistory transaction = new TransactionHistory();
             transaction.setId(transactionMap.get("id").s());
-            transaction.setFundId(transactionMap.get("fondoId").s());
-            transaction.setFundName(transactionMap.get("nombreFondo").s());
-            transaction.setType(transactionMap.get("evento").s());
-            transaction.setAmount(Double.parseDouble(transactionMap.get("saldo").s()));
-            transaction.setDate(transactionMap.get("fecha").s());
+            transaction.setFundId(transactionMap.get("fundId").s());
+            transaction.setFundName(transactionMap.get("fundName").s());
+            transaction.setType(transactionMap.get("type").s());
+            transaction.setAmount(Double.parseDouble(transactionMap.get("amount").s()));
+            transaction.setDate(transactionMap.get("date").s());
             transactions.add(transaction);
         }
         return transactions;
