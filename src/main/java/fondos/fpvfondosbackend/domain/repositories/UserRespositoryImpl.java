@@ -65,9 +65,9 @@ public class UserRespositoryImpl implements IUserRepository {
         }
     }
 
-    // Método auxiliar para convertir fundSubscriptions en List<AttributeValue>
+    // M?todo auxiliar para convertir fundSubscriptions en List<AttributeValue>
     private List<AttributeValue> convertFundSubscriptions(List<SubscribedFund> subscriptions) {
-        // Implementar la conversión si FundSubscription es una clase propia
+        // Implementar la conversi?n si FundSubscription es una clase propia
         // Dependiendo de los campos en FundSubscription, se debe crear un mapa con sus valores
         return subscriptions.stream()
                 .map(sub -> AttributeValue.builder()
@@ -81,9 +81,9 @@ public class UserRespositoryImpl implements IUserRepository {
                 .toList();
     }
 
-    // Método auxiliar para convertir transactionHistory en List<AttributeValue>
+    // M?todo auxiliar para convertir transactionHistory en List<AttributeValue>
     private List<AttributeValue> convertTransactionHistory(List<TransactionHistory> transactions) {
-        // Implementar la conversión si TransactionEntity es una clase propia
+        // Implementar la conversi?n si TransactionEntity es una clase propia
         // Dependiendo de los campos en TransactionEntity, se debe crear un mapa con sus valores
         return transactions.stream()
                 .map(th -> AttributeValue.builder()
@@ -123,7 +123,7 @@ public class UserRespositoryImpl implements IUserRepository {
         return userEntities;
     }
 
-    // Método auxiliar para convertir una lista de AttributeValue en una lista de FundSubscription
+    // M?todo auxiliar para convertir una lista de AttributeValue en una lista de FundSubscription
     private List<SubscribedFund> convertToFundSubscriptions(List<AttributeValue> attributeValues) {
         List<SubscribedFund> subscriptions = new ArrayList<>();
         for (AttributeValue attributeValue : attributeValues) {
@@ -140,7 +140,7 @@ public class UserRespositoryImpl implements IUserRepository {
         return subscriptions;
     }
 
-    // Método auxiliar para convertir una lista de AttributeValue en una lista de TransactionEntity
+    // M?todo auxiliar para convertir una lista de AttributeValue en una lista de TransactionEntity
     private List<TransactionHistory> convertToTransactionHistory(List<AttributeValue> attributeValues) {
         List<TransactionHistory> transactions = new ArrayList<>();
         for (AttributeValue attributeValue : attributeValues) {
